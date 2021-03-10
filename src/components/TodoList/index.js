@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TodoItens from '../TodoItens';
 
 
 class TodoList extends Component {
@@ -12,6 +13,7 @@ class TodoList extends Component {
 
         this.addItem = this.addItem.bind(this);
         this.log = this.log.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     addItem(e){
@@ -26,10 +28,21 @@ class TodoList extends Component {
 
 
         e.preventDefault();
+        this.setState({tarefa:''});
     }
 
     log(){
         console.log(this.state.itens);
+    }
+
+    deleteItem(key){
+        console.log('Item a ser deletado:' + key);
+        let filtro = this.state.itens.filter((item)=>{
+            return(item.key !== key);
+        })
+
+        this.setState({itens: filtro});
+
     }
 
     render() {
@@ -46,6 +59,8 @@ class TodoList extends Component {
                 </form>
 
                 <button onClick={this.log}>LOG</button>
+
+                <TodoItens lista={this.state.itens} delete={this.deleteItem}/>
 
             </div>
         )
